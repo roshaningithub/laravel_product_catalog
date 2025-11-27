@@ -9,5 +9,10 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'price', 'description'];
+    protected $fillable = ['name', 'description', 'price'];
+
+    protected static function newFactory()
+    {
+        return \Database\Factories\ProductFactory::new();
+    }
 }
