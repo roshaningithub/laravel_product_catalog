@@ -13,9 +13,9 @@ class ProductRepository implements ProductRepositoryInterface
     public function create(CreateProductDTO $data): Product
     {
         $product = Product::create([
-            'name'        => $data->name,
+            'name' => $data->name,
             'description' => $data->description,
-            'price'       => $data->price,
+            'price' => $data->price,
         ]);
 
         return $product;
@@ -26,9 +26,9 @@ class ProductRepository implements ProductRepositoryInterface
         $product = Product::findOrFail($data->id);
 
         $product->update([
-            'name'        => $data->name,
+            'name' => $data->name,
             'description' => $data->description,
-            'price'       => $data->price,
+            'price' => $data->price,
         ]);
 
         return $product;

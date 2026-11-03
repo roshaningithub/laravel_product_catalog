@@ -10,6 +10,8 @@ use App\Modules\Product\Models\Product;
 interface ProductRepositoryInterface
 {
     public function create(CreateProductDTO $data): Product;
+
     public function update(UpdateProductDTO $data): Product;
+
     public function delete(DeleteProductDTO $data): bool;
 }

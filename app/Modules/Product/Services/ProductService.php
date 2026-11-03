@@ -3,12 +3,12 @@
 namespace App\Modules\Product\Services;
 
 use App\Modules\Product\DTOs\CreateProductDTO;
-use App\Modules\Product\DTOs\UpdateProductDTO;
 use App\Modules\Product\DTOs\DeleteProductDTO;
+use App\Modules\Product\DTOs\UpdateProductDTO;
 use App\Modules\Product\Models\Product;
 use App\Modules\Product\Repositories\Interfaces\ProductRepositoryInterface;
-use Illuminate\Support\Facades\DB;
 use Exception;
+use Illuminate\Support\Facades\DB;
 
 class ProductService
 {
@@ -21,6 +21,7 @@ class ProductService
             $product = $this->productRepository->create($data);
 
             DB::commit();
+
             return $product;
         } catch (Exception $e) {
             DB::rollBack();
@@ -35,6 +36,7 @@ class ProductService
             $product = $this->productRepository->update($data);
 
             DB::commit();
+
             return $product;
         } catch (Exception $e) {
             DB::rollBack();
@@ -49,6 +51,7 @@ class ProductService
             $deleted = $this->productRepository->delete($data);
 
             DB::commit();
+
             return $deleted;
         } catch (Exception $e) {
             DB::rollBack();

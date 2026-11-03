@@ -2,16 +2,16 @@
 
 namespace App\Modules\Product\Controllers;
 
-use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
-use App\Modules\Product\Services\ProductService;
 use App\Modules\Product\DTOs\CreateProductDTO;
-use App\Modules\Product\DTOs\UpdateProductDTO;
 use App\Modules\Product\DTOs\DeleteProductDTO;
+use App\Modules\Product\DTOs\UpdateProductDTO;
 use App\Modules\Product\Requests\CreateProductRequest;
-use App\Modules\Product\Requests\UpdateProductRequest;
 use App\Modules\Product\Requests\DeleteProductRequest;
+use App\Modules\Product\Requests\UpdateProductRequest;
 use App\Modules\Product\Resources\ProductResource;
+use App\Modules\Product\Services\ProductService;
+use Illuminate\Http\JsonResponse;
 
 class ProductController extends Controller
 {

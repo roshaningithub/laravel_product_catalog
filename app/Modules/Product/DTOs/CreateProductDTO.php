@@ -7,6 +7,6 @@ class CreateProductDTO
     public function __construct(
         public string $name,
         public string $price,
-        public string $description,
+        public ?string $description = null,
     ) {}
 }

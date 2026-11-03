@@ -2,9 +2,9 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Modules\Product\Models\Product;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class ProductApiTest extends TestCase
 {
@@ -30,7 +30,7 @@ class ProductApiTest extends TestCase
         $payload = [
             'name' => 'Gaming Laptop',
             'description' => 'High performance laptop',
-            'price' => 1500
+            'price' => 1500,
         ];
 
         $response = $this->postJson('/api/product', $payload);
@@ -39,10 +39,29 @@ class ProductApiTest extends TestCase
             ->assertJson([
                 'status' => true,
                 'message' => 'Product created successfully.',
-                'data' => ['name' => 'Gaming Laptop', 'price' => 1500]
+                'data' => ['name' => 'Gaming Laptop', 'price' => 1500],
             ]);
 
         $this->assertDatabaseHas('products', ['name' => 'Gaming Laptop']);
+    }
+
+    /**
+     * Test: Can create product without a description
+     * Description is optional; the response should expose it as null under the "description" key
+     */
+    public function test_can_create_product_without_description()
+    {
+        $response = $this->postJson('/api/product', [
+            'name' => 'Mouse',
+            'price' => 25,
+        ]);
+
+        $response->assertStatus(201)
+            ->assertJsonPath('data.name', 'Mouse')
+            ->assertJsonPath('data.description', null)
+            ->assertJsonStructure(['data' => ['id', 'name', 'price', 'description']]);
+
+        $this->assertDatabaseHas('products', ['name' => 'Mouse', 'description' => null]);
     }
 
     /**
@@ -66,14 +85,14 @@ class ProductApiTest extends TestCase
         $product = Product::factory()->create([
             'name' => 'Old Laptop',
             'description' => 'Old model',
-            'price' => 1000
+            'price' => 1000,
         ]);
 
         $payload = [
             'id' => $product->id,
             'name' => 'Updated Laptop',
             'description' => 'New model',
-            'price' => 1200
+            'price' => 1200,
         ];
 
         $response = $this->putJson('/api/product', $payload);
@@ -82,7 +101,7 @@ class ProductApiTest extends TestCase
             ->assertJson([
                 'status' => true,
                 'message' => 'Product updated successfully.',
-                'data' => ['id' => $product->id, 'name' => 'Updated Laptop', 'price' => 1200]
+                'data' => ['id' => $product->id, 'name' => 'Updated Laptop', 'price' => 1200],
             ]);
 
         $this->assertDatabaseHas('products', ['id' => $product->id, 'name' => 'Updated Laptop']);
@@ -99,7 +118,7 @@ class ProductApiTest extends TestCase
         $response->assertStatus(422)
             ->assertJsonStructure([
                 'message',
-                'errors' => ['id']
+                'errors' => ['id'],
             ]);
     }
 
@@ -116,7 +135,7 @@ class ProductApiTest extends TestCase
         $response->assertStatus(200)
             ->assertJson([
                 'status' => true,
-                'message' => 'Product deleted successfully.'
+                'message' => 'Product deleted successfully.',
             ]);
 
         $this->assertDatabaseMissing('products', ['id' => $product->id]);
